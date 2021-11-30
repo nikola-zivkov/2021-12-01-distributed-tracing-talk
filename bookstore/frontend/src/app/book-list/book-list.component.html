@@ -1,0 +1,47 @@
+<h1 class="title">Bookstore</h1>
+<nz-divider></nz-divider>
+<div nz-row nzJustify="center">
+  <div *ngFor="let book of books" nz-col nzXs="24" nzSm="8" nzMd="4" nzLg="3" nzXl="2" class="book">
+    <img (click)="showBookDetails(book.uuid!);" src="http://localhost:8080/book-cover/{{book.uuid}}.jpg"
+      class="book-cover" />
+    <div class="book-title">{{book.title}}</div>
+    <div>{{book.author}}</div>
+    <div>{{book.genre}}</div>
+    <div *ngIf="book.rating">{{book.rating}} / 5</div>
+  </div>
+</div>
+<nz-divider></nz-divider>
+<div *ngIf="selectedBook" nz-row nzJustify="center">
+  <div nz-col nzSpan="10">
+    <div style="display: inline-block">
+      <img src="http://localhost:8080/book-cover/{{selectedBook.uuid}}.jpg" class="selected-book-cover" />
+    </div>
+    <div class="selected-book-details" style="display: inline-block">
+      <div style="display: inline-block; width: 80%;">
+        <div>
+          <h2>{{selectedBook.title}}</h2>
+        </div>
+        <div>by {{selectedBook.author}}</div>
+        <nz-rate *ngIf="canRateBook | async" [(ngModel)]="selectedBook.rating" (click)="rateBook()"></nz-rate>
+      </div>
+      <div class="order" style="display: inline-block; width: 20%">
+        <button nz-button nzType="primary" (click)="createOrder()">Order</button>
+      </div>
+      <div class="selected-book-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc consectetur lectus lacinia libero gravida
+        efficitur. Phasellus et massa magna. Duis posuere velit egestas tortor tempor porta. Suspendisse rhoncus
+        faucibus quam vestibulum malesuada. Duis ex justo, posuere ac feugiat bibendum, egestas ac ligula. Nunc
+        ultricies et velit eget accumsan.
+      </div>
+    </div>
+  </div>
+  <div *ngIf="similarBooks.length" nz-col nzSpan="6" class="similar-books">
+    <h2>Similar books</h2>
+    <div *ngFor="let similarBook of similarBooks" style="display: inline-block" class="book similar-book">
+      <img src="http://localhost:8080/book-cover/{{similarBook.uuid}}.jpg" class="book-cover" />
+      <div class="book-title">{{similarBook.title}}</div>
+      <div>{{similarBook.author}}</div>
+      <div *ngIf="similarBook.rating">{{similarBook.rating}} / 5</div>
+    </div>
+  </div>
+</div>

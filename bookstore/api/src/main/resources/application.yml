@@ -1,0 +1,33 @@
+bookstore:
+  api:
+    catalog-uri: http://localhost:8081
+    recommendation-uri: http://localhost:8082
+    rating-uri: http://localhost:8083
+    order-uri: http://localhost:8084
+spring:
+  application:
+    name: api
+  mvc:
+    static-path-pattern: /book-cover/**
+#  sleuth:
+#    sampler:
+#      probability: 0.5
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - rate-book-enabled
+      cors:
+        allowed-origins: http://localhost:4200,http://localhost:3000
+        allowed-methods: GET
+        allowed-headers: "*"

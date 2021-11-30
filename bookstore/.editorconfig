@@ -1,0 +1,25 @@
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+ij_continuation_indent_size = 4
+max_line_length = 120
+
+[*.java]
+ij_java_blank_lines_after_class_header = 1
+ij_java_blank_lines_around_field = 1
+ij_java_method_parameters_wrap = normal
+ij_java_align_multiline_parameters = false
+ij_java_call_parameters_wrap = on_every_item
+ij_java_method_call_chain_wrap = split_into_lines
+ij_java_annotation_parameter_wrap = on_every_item
+ij_java_doc_align_param_comments = false
+
+[*.xml]
+ij_xml_align_attributes = false
+
+[*.{md, markdown}]
+trim_trailing_whitespace = false

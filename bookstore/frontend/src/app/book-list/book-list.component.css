@@ -1,0 +1,49 @@
+.title {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.book {
+  text-align: center;
+}
+
+.book-cover {
+  padding: 4px;
+  height: 125px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.book-title {
+  font-weight: bold;
+}
+
+.selected-book-cover {
+  padding: 4px;
+  width: 175px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.selected-book-details {
+  vertical-align: top;
+  padding-left: 10px;
+}
+
+.selected-book-description {
+  width: 400px;
+  padding-top: 10px;
+}
+
+.order {
+  vertical-align: top;
+  text-align: right;
+}
+
+.similar-books {
+  text-align: center;
+}
+
+.similar-book {
+  padding-left: 20px;
+}

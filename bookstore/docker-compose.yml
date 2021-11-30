@@ -1,0 +1,84 @@
+version: '3.7'
+services:
+
+  bookstore-postgres:
+    image: postgres:9.5.6
+    container_name: bookstore-postgres
+    environment:
+      - POSTGRES_DB=bookstore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    networks:
+      - bookstore
+
+  bookstore-rabbitmq:
+    image: merapar/rabbitmq-docker:3.6.0-management
+    container_name: bookstore-rabbitmq
+    hostname: bookstore-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: bookstore
+    ports:
+      - 15672:15672
+      - 5672:5672
+    networks:
+      - bookstore
+
+  bookstore-zipkin:
+    image: openzipkin/zipkin
+    container_name: bookstore-zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - bookstore
+
+  bookstore-graylog:
+    image: graylog/graylog:4.2.1
+    container_name: bookstore-graylog
+    environment:
+      - GRAYLOG_PASSWORD_SECRET=nIikLkHd0wVhFKOx2OZGc5sJE4V0NADTKAF9UBvvPq0jPe2nn2SCYtsvWemCsh2P
+         # Pass: admin
+      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      - GRAYLOG_HTTP_PUBLISH_URI=http://127.0.0.1:9000/
+      - GRAYLOG_MONGODB_URI=mongodb://bookstore-graylog-mongo/graylog
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://bookstore-graylog-elasticsearch:9200
+    ports:
+      # Graylog web interface and REST API
+      - 9000:9000
+      # Syslog TCP
+      - 1514:1514
+      # Syslog UDP
+      - 1514:1514/udp
+      # GELF TCP
+      - 12201:12201
+      # GELF UDP
+      - 12201:12201/udp
+    networks:
+      - bookstore
+    depends_on:
+      - bookstore-graylog-mongo
+      - bookstore-graylog-elasticsearch
+
+  bookstore-graylog-mongo:
+    image: mongo:3
+    container_name: bookstore-graylog-mongo
+    networks:
+      - bookstore
+
+  bookstore-graylog-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
+    container_name: bookstore-graylog-elasticsearch
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    networks:
+      - bookstore
+
+networks:
+  bookstore:
+    name: bookstore

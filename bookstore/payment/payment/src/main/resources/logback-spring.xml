@@ -1,0 +1,22 @@
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <charset>UTF-8</charset>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+  <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
+    <graylogHost>localhost</graylogHost>
+    <graylogPort>12201</graylogPort>
+    <encoder class="de.siegmar.logbackgelf.GelfEncoder">
+      <originHost>payment</originHost>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="console"/>
+    <appender-ref ref="GELF"/>
+  </root>
+</configuration>

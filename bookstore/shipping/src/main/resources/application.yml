@@ -1,0 +1,28 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: shipping
+  cloud:
+    stream:
+      binders:
+        bookstore:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                virtual-host: bookstore
+      bindings:
+        onOrderCreatedEvent-in-0:
+          destination: OrderCreatedEvent
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+management:
+  health:
+    rabbit:
+      enabled: "false"

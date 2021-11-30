@@ -1,0 +1,35 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: recommendation
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookstore
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+  cloud:
+    stream:
+      binders:
+        bookstore:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                virtual-host: bookstore
+      bindings:
+        onBookRatedEvent-in-0:
+          destination: BookRatedEvent
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+management:
+  health:
+    rabbit:
+      enabled: "false"

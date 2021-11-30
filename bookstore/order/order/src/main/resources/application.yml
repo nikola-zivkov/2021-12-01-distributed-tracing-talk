@@ -1,0 +1,30 @@
+bookstore:
+  order:
+    payment-uri: http://localhost:8085
+server:
+  port: 8084
+spring:
+  application:
+    name: order
+  cloud:
+    stream:
+      binders:
+        bookstore:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                virtual-host: bookstore
+#  sleuth:
+#    baggage:
+#      remote-fields:
+#        - payment-id
+#      tag-fields:
+#        - payment-id
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
