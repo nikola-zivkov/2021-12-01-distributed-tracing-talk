@@ -4,7 +4,8 @@ spring:
   application:
     name: catalog
   datasource:
-    url: jdbc:postgresql://localhost:5432/bookstore
+    url: jdbc:p6spy:postgresql://localhost:5432/bookstore
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     username: postgres
     password: postgres
   jpa:
